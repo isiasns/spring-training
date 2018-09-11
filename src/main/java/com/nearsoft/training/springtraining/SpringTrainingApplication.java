@@ -1,12 +1,12 @@
-package com.nearsoft.training;
+package com.nearsoft.training.springtraining;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TrainingApplication {
+public class SpringTrainingApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TrainingApplication.class, args);
+		SpringApplication.run(SpringTrainingApplication.class, args);
 	}
 }

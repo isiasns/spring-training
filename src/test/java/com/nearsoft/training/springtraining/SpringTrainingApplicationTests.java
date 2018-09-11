@@ -1,4 +1,4 @@
-package com.nearsoft.training;
+package com.nearsoft.training.springtraining;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TrainingApplicationTests {
+public class SpringTrainingApplicationTests {
 
 	@Test
 	public void contextLoads() {

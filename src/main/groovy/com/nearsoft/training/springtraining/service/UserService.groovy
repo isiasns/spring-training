@@ -15,15 +15,15 @@ class UserService {
     @Autowired
     UserRepository userRepository;
 
-    User getUser(int id){
-        return userRepository.findById(id).orElseThrow({new EntityNotFoundException("No user found with id = " + id)})
+    User getUser(int id) {
+        return userRepository.findById(id).orElseThrow({ new EntityNotFoundException("No user found with id = " + id) })
     }
 
-    List<User> getAllUsers(){
+    List<User> getAllUsers() {
         return userRepository.findAll()
     }
 
-    User addUser(User user){
+    User addUser(User user) {
         User createdUser = userRepository.findById(user.getId()).orElse(null)
         if (createdUser != null) {
             throw new EntityExistsException("User found with id = " + user.getId())
@@ -32,9 +32,9 @@ class UserService {
         return userRepository.save(user)
     }
 
-    User updateUser(int id, User user){
+    User updateUser(int id, User user) {
         User oldUser = userRepository.findById(id).orElse(null)
-        if (oldUser == null){
+        if (oldUser == null) {
             throw new EntityNotFoundException("No user found with id = " + id)
         }
         oldUser.setPassword(user.getPassword())
@@ -43,9 +43,9 @@ class UserService {
         return userRepository.save(oldUser)
     }
 
-    void deleteUser(int id){
+    void deleteUser(int id) {
         User oldUser = userRepository.findById(id).orElse(null)
-        if (oldUser == null){
+        if (oldUser == null) {
             throw new EntityNotFoundException("No user found with id = " + id)
         }
         userRepository.deleteById(id)

@@ -10,7 +10,7 @@ import java.time.ZonedDateTime
 class User {
     @Id
     Integer id
-    @Column(unique = true)
+    @Column(unique = true, updatable = false)
     @NotNull(message = "Field username is required ")
     String username
     @NotNull(message = "Field password is required")

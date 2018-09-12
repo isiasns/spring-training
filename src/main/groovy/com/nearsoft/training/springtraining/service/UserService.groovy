@@ -24,7 +24,7 @@ class UserService {
     }
 
     User addUser(User user){
-        User createdUser = getUser(user.getId())
+        User createdUser = userRepository.findById(user.getId()).orElse(null)
         if (createdUser != null) {
             throw new EntityExistsException("User found with id = " + user.getId())
         }
@@ -33,11 +33,10 @@ class UserService {
     }
 
     User updateUser(int id, User user){
-        User oldUser = getUser(id)
+        User oldUser = userRepository.findById(id).orElse(null)
         if (oldUser == null){
             throw new EntityNotFoundException("No user found with id = " + id)
         }
-        oldUser.setUsername(user.getUsername())
         oldUser.setPassword(user.getPassword())
         oldUser.setEmailAddress(user.getEmailAddress())
         oldUser.setActive(user.getActive())
@@ -45,7 +44,7 @@ class UserService {
     }
 
     void deleteUser(int id){
-        User oldUser = getUser(id)
+        User oldUser = userRepository.findById(id).orElse(null)
         if (oldUser == null){
             throw new EntityNotFoundException("No user found with id = " + id)
         }

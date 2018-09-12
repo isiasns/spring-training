@@ -5,7 +5,10 @@ import com.nearsoft.training.springtraining.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
-import java.text.SimpleDateFormat
+import javax.persistence.EntityExistsException
+import javax.persistence.EntityNotFoundException
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 @Service
 class UserService {
@@ -13,7 +16,7 @@ class UserService {
     UserRepository userRepository;
 
     User getUser(int id){
-        return userRepository.findById(id).orElse(null)
+        return userRepository.findById(id).orElseThrow({new EntityNotFoundException("No user found with id = " + id)})
     }
 
     List<User> getAllUsers(){
@@ -21,15 +24,19 @@ class UserService {
     }
 
     User addUser(User user){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy")
-        String dateAsString = sdf.format(new Date())
-        Date dateFromString = sdf.parse(dateAsString)
-        user.setCreatedAt(dateFromString)
+        User createdUser = getUser(user.getId())
+        if (createdUser != null) {
+            throw new EntityExistsException("User found with id = " + user.getId())
+        }
+        user.setCreatedAt(ZonedDateTime.now(ZoneId.systemDefault()))
         return userRepository.save(user)
     }
 
     User updateUser(int id, User user){
         User oldUser = getUser(id)
+        if (oldUser == null){
+            throw new EntityNotFoundException("No user found with id = " + id)
+        }
         oldUser.setUsername(user.getUsername())
         oldUser.setPassword(user.getPassword())
         oldUser.setEmailAddress(user.getEmailAddress())
@@ -38,6 +45,10 @@ class UserService {
     }
 
     void deleteUser(int id){
+        User oldUser = getUser(id)
+        if (oldUser == null){
+            throw new EntityNotFoundException("No user found with id = " + id)
+        }
         userRepository.deleteById(id)
     }
 }

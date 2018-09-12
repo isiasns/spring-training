@@ -32,7 +32,7 @@ class UserController {
     }
 
     @DeleteMapping(path = "/user/{id}")
-    void deleteUser(@PathVariable(name = "id") int id){
+    ResponseEntity<Void> deleteUser(@PathVariable(name = "id") int id){
         userService.deleteUser(id)
     }
 }
